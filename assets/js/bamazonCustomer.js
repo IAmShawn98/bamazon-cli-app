@@ -1,7 +1,7 @@
 // Node Packages.
-var mysql = require("mysql");
-var inquirer = require("inquirer");
-var Table = require('easy-table')
+const mysql = require("mysql");
+const inquirer = require("inquirer");
+const Table = require('easy-table')
 
 // Connect to SQL Database.
 const connection = mysql.createConnection({
@@ -26,27 +26,38 @@ function productTable() {
         // Create our new table.
         var t = new Table
 
+        // Bamazon Ascii Banner Logo.
+        console.log(`
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▀▀█ █▀▄▀█ █▀▀█ ▀▀█ █▀▀█ █▀▀▄   █▀▀ █░░ ░▀░ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ 
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▄▄█ █░▀░█ █▄▄█ ▄▀░ █░░█ █░░█   █░░ █░░ ▀█▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ ▀▀▀░ ▀░░▀ ▀░░░▀ ▀░░▀ ▀▀▀ ▀▀▀▀ ▀░░▀   ▀▀▀ ▀▀▀ ▀▀▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
+
+    ------------------------- Your Friendly Internet Storefront! ---------------------------
+`)
         // Build storefront from our SQL data.
         response.forEach(function (product) {
-            t.cell('Product ID', product.item_id)
-            t.cell('Product Name', product.product_name)
-            t.cell('Department Name', product.department_name)
-            t.cell('Price', product.price)
-            t.cell('Quantity', product.stock_quantity)
+            t.cell("\n")
+            t.cell('  Product ID', product.item_id)
+            t.cell('  Product Name', product.product_name)
+            t.cell('  Department Name', product.department_name)
+            t.cell('  Price', product.price)
+            t.cell('  Quantity', product.stock_quantity)
 
             // Execute Build.
             t.newRow()
         });
 
         // Populate CLI with our SQL datatable.
+        console.log(" ╔═════════════════════════════════ CUSTOMER STOREFRONT VIEW ══════════════════════════════════════╗")
         console.log(t.toString());
+        console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n")
         // Ask the customer for the 'Product ID' of the item they wish to purchase.
         inquirer
             .prompt([
                 {
                     type: "input",
                     name: "item_id",
-                    message: "What is the 'Product ID' of the item you'd like to purchase?"
+                    message: "Enter the 'Product ID' of the item you'd like to purchase:"
                 }
             ])
             .then(answers => {
