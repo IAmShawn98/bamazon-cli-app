@@ -19,7 +19,7 @@ function productTable() {
     // Each time the view is executed, clear the CLI to avoid duplicate views from past executions.
     console.clear();
     // Use our SQL products table.
-    connection.query("SELECT * FROM products", function (err, response) {
+    connection.query("SELECT * FROM products", function (err, res) {
         // Catch any errors.
         if (err) throw err;
 
@@ -35,7 +35,7 @@ function productTable() {
     ------------------------- Your Friendly Internet Storefront! ---------------------------
 `)
         // Build storefront from our SQL data.
-        response.forEach(function (product) {
+        res.forEach(function (product) {
             t.cell("\n")
             t.cell('  Product ID', product.item_id)
             t.cell('  Product Name', product.product_name)
@@ -48,9 +48,10 @@ function productTable() {
         });
 
         // Populate CLI with our SQL datatable.
-        console.log(" ╔═════════════════════════════════ CUSTOMER STOREFRONT VIEW ══════════════════════════════════════╗")
+        console.log(" ╔═════════════════════════════════ CUSTOMER STOREFRONT VIEW ══════════════════════════════════════╗");
         console.log(t.toString());
-        console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n")
+        console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+
         // Ask the customer for the 'Product ID' of the item they wish to purchase.
         inquirer
             .prompt([
@@ -58,13 +59,54 @@ function productTable() {
                     type: "input",
                     name: "item_id",
                     message: "Enter the 'Product ID' of the item you'd like to purchase:"
+                },
+                {
+                    type: "input",
+                    name: "stock_quantity",
+                    message: "How many units of this item would you like to purchase:"
                 }
             ])
-            .then(answers => {
-                // Use user feedback for... whatever!!
-            });
+            .then(product => {
+                // Target the item_id of the row the customer wants to buy from.
+                connection.query("SELECT * FROM products WHERE item_id = " + product.item_id, function (err, res) {
+                    // If there is an error, handle it.
+                    if (err) throw err;
+                    // Default Amount When No Data Is Populated.
+                    var totalCost = 0;
+                    // Calculate price based on total price * total units sold during transaction. 
+                    totalCost = res[0].price * product.stock_quantity;
 
-        // Close Connection.
-        connection.end();
+                    // When the customer is finished shopping, show their virtual receipt.
+                    console.clear();
+                    console.log(`
+                                        
+                    ********** **                         **     **    **                 
+                    /////**/// /**                        /**    //**  **                  
+                        /**    /**       ******   ******* /**  ** //****    ******  **   **
+                        /**    /******  //////** //**///**/** **   //**    **////**/**  /**
+                        /**    /**///**  *******  /**  /**/****     /**   /**   /**/**  /**
+                        /**    /**  /** **////**  /**  /**/**/**    /**   /**   /**/**  /**
+                        /**    /**  /**//******** ***  /**/**//**   /**   //****** //******
+                        //     //   //  //////// ///   // //  //    //     //////   ////// 
+                    -------------------------------------------------------------------------------
+                                                - PURCHASE COMPLETE -\n
+                                        Thank you for shopping with Bamazon!
+                                                Please Take Your Receipt.
+    
+                                                 Inventory Updated!
+                                                   Total purchase:\n
+                                                      `+ "$" + totalCost + `
+                    -------------------------------------------------------------------------------
+    
+                        `);
+
+                });
+                // Deduct however many purchases the customer wants to make from the selected row.
+                connection.query("UPDATE products SET stock_quantity = stock_quantity -" + product.stock_quantity + " WHERE item_id =" + product.item_id, function (err, res) {
+                    if (err) throw err;
+                });
+                // Close connection.
+                connection.end();
+            });
     });
 }
