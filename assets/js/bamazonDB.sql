@@ -1,8 +1,10 @@
-DROP DATABASE IF EXISTS bamazon;
+-- Uncomment and execute line '2' to start fresh if needed! --
+-- DROP DATABASE IF EXISTS bamazon; --
 -- CREATE and USE our Bamazon DATABASE --
 CREATE DATABASE bamazon;
 USE bamazon;
--- Bamazon Datatable
+
+-- Creates the Bamazon Datatable --
 CREATE TABLE products (
 	item_id INT NOT NULL AUTO_INCREMENT,
     product_name VARCHAR(100) NULL,
@@ -13,7 +15,8 @@ CREATE TABLE products (
 );
 -- Select 'Bamazon' DataTable --
 SELECT * FROM products;
--- Use to Replenish Store Units When Needed--
+
+-- Execute any of the lines below to replenish DB item stock units when needed --
 UPDATE products SET stock_quantity = "18" WHERE item_id = 1;
 UPDATE products SET stock_quantity = "2" WHERE item_id = 2;
 UPDATE products SET stock_quantity = "48" WHERE item_id = 3;
