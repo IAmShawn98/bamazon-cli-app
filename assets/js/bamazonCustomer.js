@@ -94,7 +94,7 @@ function productTable() {
                     -------------------------------------------------------------------------------
                                                 - PURCHASE COMPLETE -\n
                                         Thank you for shopping with Bamazon!
-                                                Please Take Your Receipt.
+                                              Please Take Your Receipt.
 
                                                     Inventory Updated!
                                                       Total purchase:\n
