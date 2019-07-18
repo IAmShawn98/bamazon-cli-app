@@ -96,9 +96,9 @@ function productTable() {
                                         Thank you for shopping with Bamazon!
                                               Please Take Your Receipt.
 
-                                                    Inventory Updated!
-                                                      Total purchase:\n
-                                                        `+ "$" + totalCost + `
+                                                Inventory Updated!
+                                                  Total purchase:\n
+                                                    `+ "$" + totalCost + `
                     -------------------------------------------------------------------------------
                             
                                                 `);
