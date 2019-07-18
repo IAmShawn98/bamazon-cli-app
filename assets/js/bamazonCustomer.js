@@ -26,7 +26,7 @@ function productTable() {
         // Create our new table.
         var t = new Table
 
-        // Bamazon Ascii Banner Logo.
+        // Bamazon Ascii Banner.
         console.log(`
     ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▀▀█ █▀▄▀█ █▀▀█ ▀▀█ █▀▀█ █▀▀▄   █▀▀ █░░ ░▀░ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ 
     ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▄▄█ █░▀░█ █▄▄█ ▄▀░ █░░█ █░░█   █░░ █░░ ▀█▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
@@ -52,7 +52,7 @@ function productTable() {
         console.log(t.toString());
         console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
 
-        // Ask the customer for the 'Product ID' of the item they wish to purchase.
+        // Prompt the user to make purchases.
         inquirer
             .prompt([
                 {
@@ -76,30 +76,33 @@ function productTable() {
                     // Calculate price based on total price * total units sold during transaction. 
                     totalCost = res[0].price * product.stock_quantity;
 
-                    // When the customer is finished shopping, show their virtual receipt.
-                    console.clear();
-                    console.log(`
-                                        
-                    ********** **                         **     **    **                 
-                    /////**/// /**                        /**    //**  **                  
-                        /**    /**       ******   ******* /**  ** //****    ******  **   **
-                        /**    /******  //////** //**///**/** **   //**    **////**/**  /**
-                        /**    /**///**  *******  /**  /**/****     /**   /**   /**/**  /**
-                        /**    /**  /** **////**  /**  /**/**/**    /**   /**   /**/**  /**
-                        /**    /**  /**//******** ***  /**/**//**   /**   //****** //******
-                        //     //   //  //////// ///   // //  //    //     //////   ////// 
-                    -------------------------------------------------------------------------------
-                                                - PURCHASE COMPLETE -\n
-                                        Thank you for shopping with Bamazon!
-                                                Please Take Your Receipt.
-    
-                                                 Inventory Updated!
-                                                   Total purchase:\n
-                                                      `+ "$" + totalCost + `
-                    -------------------------------------------------------------------------------
-    
-                        `);
-
+                    if (res[0].stock_quantity <= 0) {
+                        console.log("Insufficient quantity!");
+                    } else {
+                        // When the customer is finished shopping, show their virtual receipt.
+                        console.clear();
+                        console.log(`
+                                                                
+                                            ********** **                         **     **    **                 
+                                            /////**/// /**                        /**    //**  **                  
+                                                /**    /**       ******   ******* /**  ** //****    ******  **   **
+                                                /**    /******  //////** //**///**/** **   //**    **////**/**  /**
+                                                /**    /**///**  *******  /**  /**/****     /**   /**   /**/**  /**
+                                                /**    /**  /** **////**  /**  /**/**/**    /**   /**   /**/**  /**
+                                                /**    /**  /**//******** ***  /**/**//**   /**   //****** //******
+                                                //     //   //  //////// ///   // //  //    //     //////   ////// 
+                                            -------------------------------------------------------------------------------
+                                                                        - PURCHASE COMPLETE -\n
+                                                                Thank you for shopping with Bamazon!
+                                                                        Please Take Your Receipt.
+                            
+                                                                         Inventory Updated!
+                                                                           Total purchase:\n
+                                                                              `+ "$" + totalCost + `
+                                            -------------------------------------------------------------------------------
+                            
+                                                `);
+                    }
                 });
                 // Deduct however many purchases the customer wants to make from the selected row.
                 connection.query("UPDATE products SET stock_quantity = stock_quantity -" + product.stock_quantity + " WHERE item_id =" + product.item_id, function (err, res) {
@@ -108,5 +111,6 @@ function productTable() {
                 // Close connection.
                 connection.end();
             });
+
     });
 }
