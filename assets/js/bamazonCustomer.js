@@ -51,7 +51,7 @@ function productTable() {
         console.log(" ╔═════════════════════════════════ CUSTOMER STOREFRONT VIEW ══════════════════════════════════════╗");
         console.log(t.toString());
         console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
-
+        console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
         // Prompt the user to make purchases.
         inquirer
             .prompt([
