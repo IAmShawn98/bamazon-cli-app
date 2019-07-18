@@ -78,9 +78,12 @@ function productTable() {
                     // Calculate price based on total price * total units sold during transaction. 
                     totalCost = res[0].price * product.stock_quantity;
 
+                    // If the user tries to purchase more item units than in stock, prevent their purchase.
+
                     // If there isn't enough product units, let the customer know.
-                    if (res[0].stock_quantity <= 0) {
-                        console.log("\n! Insufficient Quantity: This item is sold out, sorry for the inconvenience!");
+                    if (res[0].stock_quantity <= 0 || res[0].stock_quantity < product.stock_quantity) {
+                        console.log("! Problem Approving Transaction: This item is either sold out, or you entered an " +
+                            "invalid unit amount.");
 
                         // Add back the deduction to avoid negitive values.
                         connection.query("UPDATE products SET stock_quantity = stock_quantity +" + product.stock_quantity + " WHERE item_id =" + product.item_id, function (err, res) {

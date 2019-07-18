@@ -18,7 +18,7 @@ SELECT * FROM products;
 
 -- Execute any of the lines below to replenish DB item stock units when needed --
 UPDATE products SET stock_quantity = "18" WHERE item_id = 1;
-UPDATE products SET stock_quantity = "2" WHERE item_id = 2;
+UPDATE products SET stock_quantity = "0" WHERE item_id = 2;
 UPDATE products SET stock_quantity = "48" WHERE item_id = 3;
 UPDATE products SET stock_quantity = "25" WHERE item_id = 4;
 UPDATE products SET stock_quantity = "27" WHERE item_id = 5;
