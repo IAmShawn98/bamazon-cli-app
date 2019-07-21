@@ -11,16 +11,23 @@ const connection = mysql.createConnection({
     database: "bamazon"
 });
 
+// Initially show all storefront products.
 allProducts();
 
+// Show all products functionality.
 function allProducts() {
+    // Clear the console to avoid duplicate ascii tables at once.
     console.clear();
 
+    // Select all products from the SQL DB.
     connection.query("SELECT * FROM products", function (err, res) {
+        // If there is an error, handle it.
         if (err) throw err;
 
+        // Construct a new table.
         var t = new Table;
 
+        // Build our table using data from our SQL DB.
         res.forEach(function (product) {
             t.cell("\n");
             t.cell("  Product ID", product.item_id);
@@ -28,8 +35,10 @@ function allProducts() {
             t.cell("  Department Name", product.department_name);
             t.cell("  Price", product.price);
             t.cell("  Quantity", product.stock_quantity);
+            // Create the table we built.
             t.newRow();
         });
+
         // Bamazon Ascii Banner.
         console.log(`
     ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▀▀█ █▀▄▀█ █▀▀█ ▀▀█ █▀▀█ █▀▀▄   █▀▀ █░░ ░▀░ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ 
@@ -45,11 +54,14 @@ function allProducts() {
         console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
         console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
 
+        // Display Management Options.
         managerConsole();
     });
 }
 
+// Management Options Functionality.
 function managerConsole() {
+    // Prompt the manager with data options.
     inquirer
         .prompt([
             {
@@ -59,6 +71,7 @@ function managerConsole() {
                 choices: ["View Products for Sale", "View Low Inventory", "Add Inventory", "Add New Product"]
             }
         ])
+        // Depending on what they select, go to desired functionality.
         .then(function (select) {
             switch (select.dataOptions) {
                 case "View Products for Sale":
@@ -68,14 +81,18 @@ function managerConsole() {
         });
 }
 
+// Show item units ONLY for SALE.
 function productsForSale() {
     console.clear();
 
+    // Select SQL data from values in the table that meet the query requirements.
     connection.query("SELECT * FROM products WHERE stock_quantity > 0;", function (err, res) {
         if (err) throw err;
 
+        // Construct a new table.
         var t = new Table;
 
+        // Build our table.
         res.forEach(function (product) {
             t.cell("\n");
             t.cell("  Product ID", product.item_id);
@@ -83,6 +100,8 @@ function productsForSale() {
             t.cell("  Department Name", product.department_name);
             t.cell("  Price", product.price);
             t.cell("  Quantity", product.stock_quantity);
+
+            // Initialize our new table.
             t.newRow();
         });
 
@@ -101,6 +120,7 @@ function productsForSale() {
         console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
         console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
 
+        // Display Management Options.
         managerConsole();
     });
 }

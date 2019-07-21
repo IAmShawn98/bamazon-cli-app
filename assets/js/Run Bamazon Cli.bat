@@ -7,9 +7,9 @@ cls
 echo.
 echo  Welcome to Bamazon CLI, the command line storefront! Select how you'd like to use Bamazon.
 echo.
-echo  1.) As A Customer.
-echo  2.) As A Manager.
-echo  3.) As A Supervisor.
+echo  1.) View As A Customer.
+echo  2.) View As A Manager.
+echo  3.) View As A Supervisor.
 echo.
 echo  Type 1, 2, or 3 and press 'enter' to select an option.
 echo.
