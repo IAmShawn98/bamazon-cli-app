@@ -67,7 +67,7 @@ function managerConsole() {
             {
                 type: "list",
                 name: "dataOptions",
-                message: "Manager Console: How would you like to view your data? Select from the options below.",
+                message: "Management Options: How would you like to view your data? Select from the options below.",
                 choices: ["View Products for Sale", "View Low Inventory", "Add Inventory", "Add New Product"]
             }
         ])
@@ -121,6 +121,7 @@ function productsForSale() {
         console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
 
         // Display Management Options.
+        console.log("                              - You are now viewing all products for sale! - \n")
         managerConsole();
     });
 }
