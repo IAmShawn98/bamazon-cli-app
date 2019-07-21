@@ -5,13 +5,13 @@
 :selectMenu
 cls
 echo.
-echo  Welcome to Bamazon CLI, the command line storefront! What role do you assume? Let us know.
+echo  Welcome to Bamazon CLI, the command line storefront! Select how you'd like to use Bamazon.
 echo.
-echo  1.) I'm A Customer.
-echo  2.) I'm A Manager.
-echo  3.) I'm the Supervisor.
+echo  1.) As A Customer.
+echo  2.) As A Manager.
+echo  3.) As A Supervisor.
 echo.
-echo  Type 1, 2, or 3 and press 'enter'.
+echo  Type 1, 2, or 3 and press 'enter' to select an option.
 echo.
 
 :: If the user selects 1, 2, or 3 go to the proper node views.
@@ -31,9 +31,10 @@ goto customerView
 :: Launch Manager View.
 :managerView
 cls
-echo This portion of Bamazon is not yet implemented. Try again later.
+echo Loading View.... Please Wait.
+node bamazonManager.js
 pause
-goto selectMenu
+exit
 
 :: Launch Supervisor View.
 :supervisorView

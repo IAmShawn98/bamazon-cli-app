@@ -23,9 +23,6 @@ function productTable() {
         // If there is an error, handle it.
         if (err) throw err;
 
-        // Create our new table.
-        var t = new Table
-
         // Bamazon Ascii Banner.
         console.log(`
     ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▀▀█ █▀▄▀█ █▀▀█ ▀▀█ █▀▀█ █▀▀▄   █▀▀ █░░ ░▀░ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ 
@@ -34,6 +31,9 @@ function productTable() {
 
     ------------------------- Your Friendly Internet Storefront! ---------------------------
 `)
+        // Create our new table.
+        var t = new Table
+        
         // Build storefront from our SQL data.
         res.forEach(function (product) {
             t.cell("\n")
