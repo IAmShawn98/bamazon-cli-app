@@ -77,12 +77,19 @@ function managerConsole() {
                 case "View Products for Sale":
                     productsForSale();
                     break;
+                case "View Low Inventory":
+                    productsLowInventory();
+                    break;
+                case "Add Inventory":
+                    AddProducts();
+                    break;
             }
         });
 }
 
 // Show item units ONLY for SALE.
 function productsForSale() {
+    // Clear the console to avoid duplicate ascii tables at once.
     console.clear();
 
     // Select SQL data from values in the table that meet the query requirements.
@@ -123,5 +130,90 @@ function productsForSale() {
         // Display Management Options.
         console.log("                              - You are now viewing all products for sale! - \n")
         managerConsole();
+    });
+}
+
+// Show products with a low inventory ONLY.
+function productsLowInventory() {
+    // Clear the console to avoid duplicate ascii tables at once.
+    console.clear();
+
+    // Select SQL data from values in the table that meet the query requirements.
+    connection.query("SELECT * FROM products WHERE stock_quantity < 5;", function (err, res) {
+        if (err) throw err;
+
+        // Construct a new table.
+        var t = new Table;
+
+        // Build our table.
+        res.forEach(function (product) {
+            t.cell("\n");
+            t.cell("  Product ID", product.item_id);
+            t.cell("  Product Name", product.product_name);
+            t.cell("  Department Name", product.department_name);
+            t.cell("  Price", product.price);
+            t.cell("  Quantity", product.stock_quantity);
+
+            // Initialize our new table.
+            t.newRow();
+        });
+
+        // Bamazon Ascii Banner.
+        console.log(`
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▀▀█ █▀▄▀█ █▀▀█ ▀▀█ █▀▀█ █▀▀▄   █▀▀ █░░ ░▀░ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ 
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▄▄█ █░▀░█ █▄▄█ ▄▀░ █░░█ █░░█   █░░ █░░ ▀█▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ ▀▀▀░ ▀░░▀ ▀░░░▀ ▀░░▀ ▀▀▀ ▀▀▀▀ ▀░░▀   ▀▀▀ ▀▀▀ ▀▀▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
+
+    ------------------------- Your Friendly Internet Storefront! ---------------------------
+            `)
+
+        // Populate CLI with our SQL datatable.
+        console.log(" ╔═══════════════════════════════ MANAGEMENT STOREFRONT VIEW ══════════════════════════════════════╗");
+        console.log(t.toString());
+        console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+        console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
+
+        // Display Management Options.
+        console.log("                              - You are now viewing all products with low inventory! - \n")
+        managerConsole();
+    });
+}
+
+
+// Show all products functionality.
+function AddProducts() {
+    // Select all products from the SQL DB.
+    connection.query("SELECT * FROM products", function (err, res) {
+        // If there is an error, handle it.
+        if (err) throw err;
+
+        // Construct a new table.
+        var t = new Table;
+
+        // Build our table using data from our SQL DB.
+        res.forEach(function (product) {
+            t.cell("\n");
+            t.cell("  Product ID", product.item_id);
+            t.cell("  Product Name", product.product_name);
+            t.cell("  Department Name", product.department_name);
+            t.cell("  Price", product.price);
+            t.cell("  Quantity", product.stock_quantity);
+            // Create the table we built.
+            t.newRow();
+        });
+        // Prompt the manager with data options.
+        console.log("--------------------------------------------------------------------------------------------------------");
+        console.log("! Add A Product:")
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "add_product",
+                    message: "What is the name of the product you'd like to add:",
+                }
+            ])
+            .then(addProduct => {
+                console.log(addProduct.add_product);
+            })
     });
 }
