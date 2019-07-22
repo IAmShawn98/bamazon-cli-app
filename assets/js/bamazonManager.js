@@ -83,6 +83,9 @@ function managerConsole() {
                 case "Add New Product":
                     AddProducts();
                     break;
+                case "Add Inventory":
+                    addInventory();
+                    break;
             }
         });
 }
@@ -196,7 +199,7 @@ function AddProducts() {
             t.cell("Product ID", product.item_id);
             t.cell("Product Name", product.product_name);
             t.cell("Department Name", product.department_name);
-            t.cell("Price", + "$" + product.price);
+            t.cell("Price", product.price);
             t.cell("Quantity", product.stock_quantity);
             // Create the table we built.
             t.newRow();
@@ -240,4 +243,26 @@ function AddProducts() {
                 allProducts();
             });
     });
+}
+
+// Add to Inventory Functionality.
+function addInventory() {
+    inquirer
+        .prompt([
+            {
+                type: "input",
+                name: "item_id",
+                message: "Enter the 'Product ID' of the item you'd like to replenish:"
+            },
+            {
+                type: "input",
+                name: "unit_amount",
+                message: "How many units of this item would you like to add:"
+            }
+        ])
+        .then(function (select) {
+            connection.query("UPDATE products SET stock_quantity = stock_quantity + " + select.unit_amount + " WHERE item_id = " + select.item_id + "");
+            console.log("Your inventory was successfully updated!");
+            allProducts();
+        });
 }

@@ -78,7 +78,6 @@ function productTable() {
                     // Calculate price based on total price * total units sold during transaction. 
                     totalCost = res[0].price * product.stock_quantity;
 
-
                     // If there isn't enough product units, let the customer know.
                     // OR; If the user tries to purchase more item units than in 
                     // stock, prevent their purchase.
