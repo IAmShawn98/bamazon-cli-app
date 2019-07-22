@@ -261,8 +261,9 @@ function addInventory() {
             }
         ])
         .then(function (select) {
+            // Gets the two values from inquirer 'unit_amount && item_id'.
             connection.query("UPDATE products SET stock_quantity = stock_quantity + " + select.unit_amount + " WHERE item_id = " + select.item_id + "");
-            console.log("Your inventory was successfully updated!");
+            // Go back to the manager console.
             allProducts();
         });
 }
