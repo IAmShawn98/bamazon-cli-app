@@ -30,11 +30,11 @@ function allProducts() {
         // Build our table using data from our SQL DB.
         res.forEach(function (product) {
             t.cell("\n");
-            t.cell("  Product ID", product.item_id);
-            t.cell("  Product Name", product.product_name);
-            t.cell("  Department Name", product.department_name);
-            t.cell("  Price", product.price);
-            t.cell("  Quantity", product.stock_quantity);
+            t.cell("Product ID", product.item_id);
+            t.cell("Product Name", product.product_name);
+            t.cell("Department Name", product.department_name);
+            t.cell("Price", product.price);
+            t.cell("Quantity", product.stock_quantity);
             // Create the table we built.
             t.newRow();
         });
@@ -105,11 +105,11 @@ function productsForSale() {
         // Build our table.
         res.forEach(function (product) {
             t.cell("\n");
-            t.cell("  Product ID", product.item_id);
-            t.cell("  Product Name", product.product_name);
-            t.cell("  Department Name", product.department_name);
-            t.cell("  Price", product.price);
-            t.cell("  Quantity", product.stock_quantity);
+            t.cell("Product ID", product.item_id);
+            t.cell("Product Name", product.product_name);
+            t.cell("Department Name", product.department_name);
+            t.cell("Price", product.price);
+            t.cell("Quantity", product.stock_quantity);
 
             // Initialize our new table.
             t.newRow();
@@ -151,11 +151,11 @@ function productsLowInventory() {
         // Build our table.
         res.forEach(function (product) {
             t.cell("\n");
-            t.cell("  Product ID", product.item_id);
-            t.cell("  Product Name", product.product_name);
-            t.cell("  Department Name", product.department_name);
-            t.cell("  Price", product.price);
-            t.cell("  Quantity", product.stock_quantity);
+            t.cell("Product ID", product.item_id);
+            t.cell("Product Name", product.product_name);
+            t.cell("Department Name", product.department_name);
+            t.cell("Price", product.price);
+            t.cell("Quantity", product.stock_quantity);
 
             // Initialize our new table.
             t.newRow();

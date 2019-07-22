@@ -1,0 +1,5 @@
+-- This SQL file is used to CREATE a new DATABASE. --
+
+-- DROP DATABASE IF EXISTS then CREATE DATABASE. --
+DROP DATABASE IF EXISTS bamazon;
+CREATE DATABASE bamazon;
