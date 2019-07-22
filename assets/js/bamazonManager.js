@@ -68,7 +68,7 @@ function managerConsole() {
                 type: "list",
                 name: "dataOptions",
                 message: "Management Options: How would you like to view your data? Select from the options below.",
-                choices: ["View Products for Sale", "View Low Inventory", "Add Inventory", "Add New Product"]
+                choices: ["View Products for Sale", "View Low Inventory", "Add New Product", "Add Inventory",]
             }
         ])
         // Depending on what they select, go to desired functionality.
@@ -80,7 +80,7 @@ function managerConsole() {
                 case "View Low Inventory":
                     productsLowInventory();
                     break;
-                case "Add Inventory":
+                case "Add New Product":
                     AddProducts();
                     break;
             }
@@ -174,7 +174,7 @@ function productsLowInventory() {
         console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
 
         // Display Management Options.
-        console.log("                              - You are now viewing all products with low inventory! - \n")
+        console.log("                              - You are now viewing all products with low inventory! - \n");
         managerConsole();
     });
 }
@@ -208,12 +208,36 @@ function AddProducts() {
             .prompt([
                 {
                     type: "input",
-                    name: "add_product",
-                    message: "What is the name of the product you'd like to add:",
+                    name: "product_name",
+                    message: "What is the name of the product:",
+                },
+                {
+                    type: "input",
+                    name: "department_name",
+                    message: "What is the department name of this product:",
+                },
+                {
+                    type: "input",
+                    name: "price",
+                    message: "What is the price of this product:",
+                },
+                {
+                    type: "input",
+                    name: "stock_quantity",
+                    message: "What is the stock stock quantity of this product:",
                 }
             ])
-            .then(addProduct => {
-                console.log(addProduct.add_product);
-            })
+            .then(function (addProducts) {
+                connection.query("INSERT INTO products SET ?", {
+                    product_name: addProducts.product_name,
+                    department_name: addProducts.department_name,
+                    price: addProducts.price,
+                    stock_quantity: addProducts.stock_quantity
+                });
+                console.clear();
+
+                allProducts();
+                managerConsole();
+            });
     });
 }
