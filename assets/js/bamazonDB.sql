@@ -1,5 +1,5 @@
 -- Uncomment and execute line '2' to start fresh if needed! --
-DROP DATABASE IF EXISTS bamazon;
+-- DROP DATABASE IF EXISTS bamazon; --
 -- CREATE and USE our Bamazon DATABASE --
 CREATE DATABASE bamazon;
 USE bamazon;

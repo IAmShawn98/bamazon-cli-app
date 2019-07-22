@@ -37,11 +37,11 @@ function productTable() {
         // Build storefront from our SQL data.
         res.forEach(function (product) {
             t.cell("\n")
-            t.cell('  Product ID', product.item_id)
-            t.cell('  Product Name', product.product_name)
-            t.cell('  Department Name', product.department_name)
-            t.cell('  Price', product.price)
-            t.cell('  Quantity', product.stock_quantity)
+            t.cell('Product ID', product.item_id)
+            t.cell('Product Name', product.product_name)
+            t.cell('Department Name', product.department_name)
+            t.cell('Price', product.price)
+            t.cell('Quantity', product.stock_quantity)
 
             // Execute Build.
             t.newRow()
