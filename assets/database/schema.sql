@@ -15,8 +15,8 @@ CREATE TABLE products (
 -- Creates the 'departments' Datatable --
 CREATE TABLE departments (
 	department_id INT NOT NULL AUTO_INCREMENT,
-    department_name VARCHAR(100) NULL,
-    over_head_costs VARCHAR(100) NULL,
+    over_head_costs DECIMAL(10,2) NULL,
+    total_profit DECIMAL(10,2) NULL,
     PRIMARY KEY (department_id)
 );
 

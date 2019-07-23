@@ -39,6 +39,7 @@ exit
 :: Launch Supervisor View.
 :supervisorView
 cls
-echo This portion of Bamazon is not yet implemented. Try again later.
+echo Loading View.... Please Wait.
+node bamazonSupervisor.js
 pause
-goto selectMenu
+goto supervisorView

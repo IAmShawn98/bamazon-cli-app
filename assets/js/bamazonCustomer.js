@@ -33,7 +33,7 @@ function productTable() {
 `)
         // Create our new table.
         var t = new Table
-        
+
         // Build storefront from our SQL data.
         res.forEach(function (product) {
             t.cell("\n")
@@ -41,6 +41,7 @@ function productTable() {
             t.cell('Product Name', product.product_name)
             t.cell('Department Name', product.department_name)
             t.cell('Price', product.price)
+            // t.cell('Sales', product.product_sales)
             t.cell('Quantity', product.stock_quantity)
 
             // Execute Build.
@@ -78,9 +79,13 @@ function productTable() {
                     // Calculate price based on total price * total units sold during transaction. 
                     totalCost = res[0].price * product.stock_quantity;
 
+
+
                     // If there isn't enough product units, let the customer know.
                     // OR; If the user tries to purchase more item units than in 
                     // stock, prevent their purchase.
+
+                    // the price of the product multiplied by the quantity purchased is added to the product's product_sales column
                     if (res[0].stock_quantity <= 0 || res[0].stock_quantity < product.stock_quantity) {
                         console.log("! Problem Approving Transaction: This item is either sold out, or you entered an " +
                             "invalid unit amount.");
@@ -119,14 +124,16 @@ function productTable() {
                 });
 
                 // Deduct however many purchases the customer wants to make from the selected row.
-                connection.query("UPDATE products SET stock_quantity = stock_quantity -" + product.stock_quantity + " WHERE item_id =" + product.item_id, function (err, res) {
+                connection.query("UPDATE products SET stock_quantity = stock_quantity - " + product.stock_quantity + " WHERE item_id =" + product.item_id, function (err, res) {
                     // If there is an error, handle it.
                     if (err) throw err;
+                });
 
+                // Calculate product sales.
+                connection.query("UPDATE products SET product_sales = price * " + product.stock_quantity + " WHERE item_id =" + product.item_id, function () {
                     // Close connection.
                     connection.end();
                 });
             });
-
     });
 }

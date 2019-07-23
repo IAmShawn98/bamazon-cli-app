@@ -71,7 +71,7 @@ function managerConsole() {
                 choices: ["View Products for Sale", "View Low Inventory", "Add New Product", "Add Inventory",]
             }
         ])
-        // Depending on what they select, go to desired functionality.
+        // Depending on what the user selects, go to desired functionality.
         .then(function (select) {
             switch (select.dataOptions) {
                 case "View Products for Sale":
