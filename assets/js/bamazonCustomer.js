@@ -41,7 +41,6 @@ function productTable() {
             t.cell('Product Name', product.product_name)
             t.cell('Department Name', product.department_name)
             t.cell('Price', product.price)
-            // t.cell('Sales', product.product_sales)
             t.cell('Quantity', product.stock_quantity)
 
             // Execute Build.

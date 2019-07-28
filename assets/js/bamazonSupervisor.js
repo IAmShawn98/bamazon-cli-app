@@ -40,17 +40,17 @@ function productTable() {
             t.cell('Product Name', product.product_name)
             t.cell('Department Name', product.department_name)
             t.cell('Price', product.price)
-            // t.cell('Sales', product.product_sales)
+            // t.cell('Product Sales', product.product_sales)
             t.cell('Quantity', product.stock_quantity)
 
             // Execute Build.
             t.newRow()
         });
         // Populate CLI with our SQL datatable.
-        console.log(" ╔═══════════════════════════════ SUPERVISOR STOREFRONT VIEW ══════════════════════════════════════╗");
+        console.log(" ╔═══════════════════════════════════════════ SUPERVISOR STOREFRONT VIEW ════════════════════╗");
         console.log(t.toString());
-        console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
-        console.log("                                       ( © A Thing By Shawn 2019 )\n                                  ");
+        console.log(" ╚═══════════════════════════════════════════════════════════════════════════════════════════╝\n");
+        console.log("                                       ( © A Thing By Shawn 2019 )\n                            ");
 
         // Execute Options for the Supervisor.
         supervisorConsole();
@@ -65,13 +65,13 @@ function supervisorConsole() {
                 type: "list",
                 name: "dataOptions",
                 message: "Supervisor Options: What would you like to do? Select from the options below.",
-                choices: ["View Product Sales by Department", "Create New Department"]
+                choices: ["View Product Profits by Department", "Create New Department"]
             }
         ])
         // Depending on what the user selects, go to desired functionality.
         .then(function (select) {
             switch (select.dataOptions) {
-                case "View Product Sales by Department":
+                case "View Product Profits by Department":
                     viewDepartmentSales();
                     break;
                 case "Create New Department":
@@ -84,16 +84,17 @@ function supervisorConsole() {
 // View Department Sales Functionality.
 function viewDepartmentSales() {
     console.clear();
-    connection.query("SELECT * FROM departments;", function (err, res) {
+    connection.query("SELECT d.department_id, d.department_name, d.over_head_costs, SUM(IFNULL ( p.product_sales, 0.00)) AS product_sales, SUM(IFNULL ( p.product_sales, 0.00)) - d.over_head_costs AS total_profit FROM products p RIGHT JOIN departments d ON p.department_name = d.department_name GROUP BY d.department_id, d.department_name, d.over_head_costs;", function (err, res) {
         var t = new Table
 
         // Build storefront from our SQL data.
         res.forEach(function (product) {
             t.cell("\n")
             t.cell("Department ID", product.department_id)
-            t.cell("Overhead Costs", product.department_name)
+            t.cell("Department Name", product.department_name)
+            t.cell("Overhead Costs", product.over_head_costs)
             t.cell("Product Sales", product.product_sales)
-            t.cell("Profit", product.profit)
+            t.cell("Profit", product.total_profit)
 
             // Execute Build.
             t.newRow()
@@ -107,12 +108,15 @@ function viewDepartmentSales() {
 
     ------------------------- Your Friendly Internet Storefront! ---------------------------
                     `)
+
         // Populate CLI with our SQL datatable.
         console.log(" ╔══════════════════════════════ SUPERVISOR PRODUCT SALES VIEW ════════════════════════════════════╗");
-        // console.log(t.toString());
-        console.log("                    This is where supervisors will view department sales from.")
+        console.log(t.toString());
         console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
         console.log("                                ( © A Thing By Shawn 2019 )\n                                  ");
+
+        // Execute Options for the Supervisor.
+        supervisorConsole();
     });
 }
 
