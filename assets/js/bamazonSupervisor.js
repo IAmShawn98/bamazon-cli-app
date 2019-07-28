@@ -123,5 +123,61 @@ function viewDepartmentSales() {
 // View Department Sales Functionality.
 function createDepartments() {
     console.clear();
-    console.log("This is where users will be able to create new departments.");
+    connection.query("SELECT d.department_id, d.department_name, d.over_head_costs, SUM(IFNULL ( p.product_sales, 0.00)) AS product_sales, SUM(IFNULL ( p.product_sales, 0.00)) - d.over_head_costs AS total_profit FROM products p RIGHT JOIN departments d ON p.department_name = d.department_name GROUP BY d.department_id, d.department_name, d.over_head_costs;", function (err, res) {
+        var t = new Table
+
+        // Build storefront from our SQL data.
+        res.forEach(function (product) {
+            t.cell("\n")
+            t.cell("Department ID", product.department_id)
+            t.cell("Department Name", product.department_name)
+            t.cell("Overhead Costs", product.over_head_costs)
+            t.cell("Product Sales", product.product_sales)
+            t.cell("Profit", product.total_profit)
+
+            // Execute Build.
+            t.newRow()
+        });
+
+        // Bamazon Ascii Banner.
+        console.log(`
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▀▀█ █▀▄▀█ █▀▀█ ▀▀█ █▀▀█ █▀▀▄   █▀▀ █░░ ░▀░ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ 
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ █▀▀▄ █▄▄█ █░▀░█ █▄▄█ ▄▀░ █░░█ █░░█   █░░ █░░ ▀█▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
+    ¸¸.•*¨*•♫♪¸¸.•*¨*•♫ ▀▀▀░ ▀░░▀ ▀░░░▀ ▀░░▀ ▀▀▀ ▀▀▀▀ ▀░░▀   ▀▀▀ ▀▀▀ ▀▀▀ ¸¸.•*¨*•♫♪¸¸.•*¨*•♫
+
+    ------------------------- Your Friendly Internet Storefront! ---------------------------
+                    `)
+
+        // Populate CLI with our SQL datatable.
+        console.log(" ╔══════════════════════════════ SUPERVISOR PRODUCT SALES VIEW ════════════════════════════════════╗");
+        console.log(t.toString());
+        console.log(" ╚═════════════════════════════════════════════════════════════════════════════════════════════════╝\n");
+        console.log("                                ( © A Thing By Shawn 2019 )\n                                  ");
+
+        // Create New Department.
+        console.log("! Create New Department: \n");
+        inquirer
+            .prompt([
+                {
+                    type: "input",
+                    name: "department_name",
+                    message: "Type a name for your new department:"
+                },
+                {
+                    type: "input",
+                    name: "over_head_costs",
+                    message: "Enter the over head cost for this department:"
+                }
+            ])
+            // Depending on what the user selects, go to desired functionality.
+            .then(function (addDepartment) {
+                connection.query("INSERT INTO departments SET ?", {
+                    department_name: addDepartment.department_name,
+                    over_head_costs: addDepartment.over_head_costs
+                });
+                console.clear();
+
+                viewDepartmentSales();
+            });
+    });
 }
