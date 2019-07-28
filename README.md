@@ -11,7 +11,10 @@ There are three main functions of Bamazon that make up the entire application:
    * Add New Products.
    * Add / Replenish Inventory stock quantity.
 3. The Supervisor View:
-   * Not Yet Available - COMING SOON!
+   * View Product Over Head Costs
+   * Read product sales.
+   * Read Product Profits based on sales.
+   * Create new departments (Not Yet Available, coming soon).
 
 
 ## Video Demonstration
