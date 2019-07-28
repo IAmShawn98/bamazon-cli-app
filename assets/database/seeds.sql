@@ -44,7 +44,7 @@ d.department_id,
 d.department_name,
 d.over_head_costs;
 
--- INSERT TABLE DATA --
+-- INSERT TABLE DATA (FOR DEPARTMENTS) --
 INSERT INTO departments (department_name, over_head_costs)
 VALUES ("Home & Kitchen", 250.21);
 
@@ -56,3 +56,34 @@ VALUES ("Games & DVDs", 500.12);
 
 INSERT INTO departments (department_name, over_head_costs)
 VALUES ("Vehicles", 900.12);
+
+-- INSERT TABLE DATA (FOR PRODUCTS) --
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Wall Decal of Senior Citizens", "Home & Kitchen", 8.28, 85);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Desktop Refrigerator", "Appliances", 28.25, 75);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Dancing With Cats", "Games & DVDs", 13.22, 65);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("2003 Ford Windstar", "Vehicles", 300.27, 4);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Heavy Tub of Lard", "Food", 15.97, 40);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Acrylic Paint", "Art Supplies", 1.05, 2);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Roast Beef Bath Soak", "Personal Care", 17.95, 20);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Pigeon Mask", "Fashion", 27.48, 55);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Nothing", "Something", 0.01, 0);
+
+INSERT INTO departments (product_name, department_name, price, stock_quantity)
+VALUES ("Something", "Nothing", 1.11, 1);
