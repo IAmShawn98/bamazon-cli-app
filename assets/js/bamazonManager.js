@@ -35,6 +35,7 @@ function allProducts() {
             t.cell("Department Name", product.department_name);
             t.cell("Price", product.price);
             t.cell("Quantity", product.stock_quantity);
+
             // Create the table we built.
             t.newRow();
         });
@@ -132,6 +133,8 @@ function productsForSale() {
 
         // Display Management Options.
         console.log("                              - You are now viewing all products for sale! - \n")
+
+        // Function to display manager console.
         managerConsole();
     });
 }
@@ -231,6 +234,7 @@ function AddProducts() {
                 }
             ])
             .then(function (addProducts) {
+                // Query to insert new product data to MYSQL.
                 connection.query("INSERT INTO products SET ?", {
                     product_name: addProducts.product_name,
                     department_name: addProducts.department_name,
@@ -238,8 +242,8 @@ function AddProducts() {
                     stock_quantity: addProducts.stock_quantity
                 });
 
+                // Clear Ascii and Goto the all products view.
                 console.clear();
-
                 allProducts();
             });
     });

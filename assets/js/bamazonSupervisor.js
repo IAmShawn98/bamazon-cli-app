@@ -83,8 +83,11 @@ function supervisorConsole() {
 
 // View Department Sales Functionality.
 function viewDepartmentSales() {
+    // Clear Ascii and query select our departments table and mege product sales with departments, then calculate profits for display.
     console.clear();
     connection.query("SELECT d.department_id, d.department_name, d.over_head_costs, SUM(IFNULL ( p.product_sales, 0.00)) AS product_sales, SUM(IFNULL ( p.product_sales, 0.00)) - d.over_head_costs AS total_profit FROM products p RIGHT JOIN departments d ON p.department_name = d.department_name GROUP BY d.department_id, d.department_name, d.over_head_costs;", function (err, res) {
+        
+        // Create our new table.
         var t = new Table
 
         // Build storefront from our SQL data.
@@ -171,12 +174,14 @@ function createDepartments() {
             ])
             // Depending on what the user selects, go to desired functionality.
             .then(function (addDepartment) {
+                // Query insert new department into supervisor view.
                 connection.query("INSERT INTO departments SET ?", {
                     department_name: addDepartment.department_name,
                     over_head_costs: addDepartment.over_head_costs
                 });
-                console.clear();
 
+                // Clear ascii and Goto department sales view.
+                console.clear();
                 viewDepartmentSales();
             });
     });
