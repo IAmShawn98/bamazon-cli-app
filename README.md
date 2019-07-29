@@ -31,4 +31,4 @@ If you run any of the three options and don't see any table data, be sure to exe
 'seeds.sql' file provides! (Or go into the Bamazon Manager View (Option 2 in the launcher) and add new products).
 
 ## Video Demonstration
-Not Yet Available, Coming Soon.
+Demonstration Here: https://www.youtube.com/watch?v=gGFVIu9c62k&feature=youtu.be
