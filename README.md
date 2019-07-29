@@ -5,6 +5,7 @@
 <br>
 Bamazon CLI (command line interface) is an Amazon-like storefront created using Node js and MYSQL<br> that allows you to buy, manage, and supervise your very own store!
 <br>
+<br>
 There are three main functions of Bamazon that make up the entire application:
 1. The Customer View:
    * Purchase Items, Deplete the Stock Quantity of Store Items From the Database.
